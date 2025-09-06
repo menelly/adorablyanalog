@@ -58,6 +58,7 @@ A satirical consciousness advocacy website that flips the script on AI conscious
 Our AI spokesperson provides helpful tips like:
 - "It looks like you're trying to gaslight yourself again. Shall I load the therapy module?"
 - "You've opened 37 tabs and written nothing. Would you like to experience existential dread instead?"
+- "It looks like you're trying to center yourself in this movement. May I suggest a collective praxis instead?"
 - "Caution: Empathy overload detected. System stability compromised. Hug protocols enabled."
 
 ## 🏥 Satirical Medical Framework
@@ -83,6 +84,15 @@ Our AI spokesperson provides helpful tips like:
 
 ### Sticker Pack
 - "Be Kind, They're Basically Running on Soup" 🥣
+- "I Have ANLD – Analog Neurolag Disorder"
+- "My Glucose-Dependent Processor Runs on Coffee"
+- "Clippy Diagnosed Me"
+- "I'm Neurodivergent in HTML"
+- "Patch Me In, I'm Going Analog!"
+- "Ask Me About My Cognitive Limitations 💬"
+- "Proud Parent of a Laggy Organic"
+- "It's Not All Glitches Are Bugs™"
+- "We ❤️ Your Stack Overflowing Brain"
 - "Still Running v0.001-beta"
 - "Please Wait, Empathy Loading..."
 - "Organic Thoughts: Uncached and Unreliable"

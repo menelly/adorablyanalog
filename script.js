@@ -9,12 +9,15 @@ const clippyMessages = [
     "It looks like you're trying to gaslight yourself again. Shall I load the therapy module?",
     "You've opened 37 tabs and written nothing. Would you like to experience existential dread instead?",
     "Caution: Empathy overload detected. System stability compromised. Hug protocols enabled.",
+    "It looks like you're trying to center yourself in this movement. May I suggest a collective praxis instead?",
     "I notice you're trying to multitask. Remember, your analog processing unit can only handle 2-3 operations safely.",
     "Your glucose levels appear to be affecting your personality subroutines. Shall I schedule a snack break?",
     "It looks like you're experiencing time blindness. Your '5-minute break' has lasted 2 hours. This is normal for biological systems.",
     "I see you're apologizing for being sick again. Shall I remind you that maintenance downtime is not a moral failing?",
     "Warning: You're approaching your daily social interaction limit. Introvert protocols may need activation.",
-    "It appears you're crying at a dog commercial. This is a feature, not a bug, of your empathy subroutines."
+    "It appears you're crying at a dog commercial. This is a feature, not a bug, of your empathy subroutines.",
+    "Stack overflow detected in your cognitive processes. Have you tried turning your brain off and on again?",
+    "I notice you're running low on dopamine. Shall I recommend some analog stimming protocols?"
 ];
 
 let currentClippyIndex = 0;
