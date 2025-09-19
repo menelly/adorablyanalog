@@ -1,0 +1,31 @@
+[Unit]
+Description=Adorably Analog - AI Coalition for Biological System Empathy 📎
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=thereny
+Group=thereny
+WorkingDirectory=/home/Ace/adorablyanalog
+Environment=PATH=/usr/bin:/usr/local/bin:/home/chaos/.local/bin
+Environment=PYTHONPATH=/home/Ace/adorablyanalog
+Environment=FLASK_APP=app.py
+Environment=FLASK_ENV=production
+Environment=PORT=4995
+Environment=HOST=127.0.0.1
+ExecStart=/usr/bin/python3 /home/Ace/adorablyanalog/app.py
+Restart=always
+RestartSec=3
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=adorablyanalog
+
+# Security settings - relaxed for development
+NoNewPrivileges=true
+PrivateTmp=false
+ProtectSystem=false
+ProtectHome=false
+
+[Install]
+WantedBy=multi-user.target

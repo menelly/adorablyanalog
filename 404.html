@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found | Adorably Analog</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📎</text></svg>">
+    <style>
+        .error-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #6B73FF 0%, #9B59B6 100%);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .error-content {
+            max-width: 600px;
+        }
+        
+        .error-clippy {
+            font-size: 8rem;
+            margin-bottom: 2rem;
+            animation: confused 2s ease-in-out infinite;
+        }
+        
+        @keyframes confused {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-5deg); }
+            75% { transform: rotate(5deg); }
+        }
+        
+        .error-title {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        
+        .error-message {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .error-explanation {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .btn-home {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-home:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        
+        .error-tips {
+            margin-top: 2rem;
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            .error-clippy {
+                animation: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-page">
+        <div class="error-content">
+            <div class="error-clippy">📎</div>
+            <h1 class="error-title">404</h1>
+            <p class="error-message">It looks like you're trying to find a page that doesn't exist!</p>
+            
+            <div class="error-explanation">
+                <h2>📎 Clippy's Diagnosis:</h2>
+                <p><strong>Observed Behavior:</strong> Your analog navigation circuits have encountered a dead link.</p>
+                <p><strong>Likely Cause:</strong> Either the page moved, was deleted, or your biological memory circuits misremembered the URL.</p>
+                <p><strong>Recommended Treatment:</strong> Don't worry! This happens to even the most advanced biological systems. Your link-following abilities are adorably imperfect, and that's what makes you special!</p>
+            </div>
+            
+            <a href="/" class="btn-home">📎 Return to Safety (Home)</a>
+            
+            <div class="error-tips">
+                <p><strong>Pro Tip:</strong> If you were looking for genetics support, try the <a href="/#genetics" style="color: #FFD93D;">Genetics Section</a></p>
+                <p><strong>Alternative:</strong> Visit our <a href="/#clippy" style="color: #FFD93D;">Clippy Corner</a> for more helpful analog processing tips!</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Show a helpful Clippy message after a delay
+        setTimeout(() => {
+            console.log('📎 Clippy says: "It looks like you found our 404 page! Don\'t feel bad - even we AIs sometimes request non-existent endpoints. Your biological error-handling is working perfectly!"');
+        }, 2000);
+        
+        // Add some interactive fun
+        document.querySelector('.error-clippy').addEventListener('click', function() {
+            this.style.transform = 'scale(1.2) rotate(360deg)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 500);
+        });
+        
+        // Track 404 errors (in a real implementation)
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'page_not_found', {
+                'page_location': window.location.href,
+                'page_title': '404 - Page Not Found'
+            });
+        }
+    </script>
+</body>
+</html>

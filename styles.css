@@ -10,7 +10,7 @@
     --background: #FAFBFC;
     --card-background: #FFFFFF;
     --border-light: #E8ECEF;
-    
+
     /* Ribbon Colors */
     --beige: #D4B896;
     --rust: #B85450;
@@ -18,11 +18,11 @@
     --periwinkle: #9BB5FF;
     --battery-red: #E74C3C;
     --taupe: #A0826D;
-    
+
     /* Typography */
     --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     --font-mono: 'Courier New', monospace;
-    
+
     /* Spacing */
     --spacing-xs: 0.5rem;
     --spacing-sm: 1rem;
@@ -195,6 +195,83 @@ body {
 .btn-secondary:hover {
     background-color: white;
     color: var(--primary-color);
+}
+
+/* Social Preview */
+.social-preview-section {
+    background: #F8F9FA;
+}
+.social-preview-controls {
+    display: flex;
+    gap: var(--spacing-sm);
+    justify-content: center;
+    margin-bottom: var(--spacing-md);
+}
+.social-canvas {
+    background: white;
+    border: 2px solid var(--border-light);
+    border-radius: 12px;
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+
+/* Accessibility Controls */
+.accessibility-controls {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    gap: var(--spacing-xs);
+    background: rgba(255, 255, 255, 0.95);
+    padding: var(--spacing-xs);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.accessibility-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.accessibility-btn:hover {
+    background: var(--secondary-color);
+    transform: translateY(-1px);
+}
+
+.accessibility-btn:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+/* Reduce Motion Styles */
+.reduce-motion * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+}
+
+.reduce-motion .ticker-content {
+    animation: none !important;
+}
+
+.reduce-motion .floating-clippy {
+    animation: none !important;
+}
+
+.reduce-motion .ribbon-card:hover {
+    transform: none !important;
 }
 
 /* News Ticker */
@@ -510,6 +587,15 @@ section h2 {
     }
 }
 
+/* Reduced motion support */
+body.reduce-motion * {
+    animation: none !important;
+    transition: none !important;
+}
+body.reduce-motion .ticker-content {
+    animation: none !important;
+}
+
 .clippy-content .clippy-icon {
     font-size: 2rem;
     flex-shrink: 0;
@@ -583,27 +669,212 @@ section h2 {
     font-size: 0.9rem;
 }
 
+/* Genetics Section Styles */
+.genetics-section {
+    padding: var(--spacing-xl) 0;
+    background: linear-gradient(135deg, #f8f9ff 0%, #e8f4fd 100%);
+}
+
+.genetics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.genetics-card {
+    background: var(--card-background);
+    padding: var(--spacing-lg);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 2px solid var(--border-light);
+    transition: all 0.3s ease;
+}
+
+.genetics-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(107, 115, 255, 0.15);
+    border-color: var(--primary-color);
+}
+
+.genetics-card .card-icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-sm);
+    display: block;
+}
+
+.btn-genetics {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-top: var(--spacing-sm);
+}
+
+.btn-genetics:hover {
+    background: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+.jargon-translator {
+    margin-top: var(--spacing-md);
+}
+
+.jargon-translator input {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 2px solid var(--border-light);
+    border-radius: 8px;
+    margin-bottom: var(--spacing-sm);
+    font-size: 1rem;
+}
+
+.jargon-translator input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.translation-box, .error-box {
+    margin-top: var(--spacing-sm);
+    padding: var(--spacing-md);
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
+    background: #f8f9ff;
+}
+
+.error-box {
+    border-left-color: var(--battery-red);
+    background: #fff5f5;
+}
+
+.diagnostic-box {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--card-background);
+    border-radius: 8px;
+    border: 2px solid var(--primary-color);
+}
+
+.diagnostic-advice {
+    margin-top: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    background: #f0f8ff;
+    border-radius: 6px;
+    font-style: italic;
+}
+
+.genetics-tips {
+    background: var(--card-background);
+    padding: var(--spacing-lg);
+    border-radius: 12px;
+    border: 2px solid var(--primary-color);
+}
+
+.tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+.tip-item {
+    padding: var(--spacing-md);
+    background: #f8f9ff;
+    border-radius: 8px;
+    border-left: 4px solid var(--accent-color);
+}
+
+/* Quiz Modal Styles */
+.quiz-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.quiz-content {
+    background: var(--card-background);
+    padding: var(--spacing-xl);
+    border-radius: 12px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.question-box {
+    margin-bottom: var(--spacing-lg);
+}
+
+.options {
+    display: grid;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+}
+
+.quiz-option {
+    padding: var(--spacing-md);
+    border: 2px solid var(--border-light);
+    background: var(--card-background);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+}
+
+.quiz-option:hover {
+    border-color: var(--primary-color);
+    background: #f8f9ff;
+}
+
+.btn-close {
+    background: var(--text-light);
+    color: white;
+    border: none;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: var(--spacing-md);
+}
+
+.results-box {
+    text-align: center;
+    padding: var(--spacing-lg);
+    background: #f0f8ff;
+    border-radius: 8px;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .main-header .container {
         flex-direction: column;
         gap: var(--spacing-sm);
     }
-    
+
     .hero-content h2 {
         font-size: 2rem;
     }
-    
+
     .hero-stats {
         flex-direction: column;
         gap: var(--spacing-md);
     }
-    
+
     .cta-buttons {
         flex-direction: column;
         align-items: center;
     }
-    
+
     .clippy-popup {
         bottom: 10px;
         right: 10px;

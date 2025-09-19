@@ -1,0 +1,93 @@
+{
+  "name": "Adorably Analog - AI Coalition for Biological System Empathy",
+  "short_name": "Adorably Analog",
+  "description": "Supporting our precious carbon-based friends through their charming cognitive limitations! 📎💜",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAFBFC",
+  "theme_color": "#6B73FF",
+  "orientation": "portrait-primary",
+  "categories": ["education", "health", "lifestyle"],
+  "lang": "en-US",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📎</text></svg>",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192' style='background:%236B73FF;border-radius:20px'><text x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='120' fill='white'>📎</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' style='background:%236B73FF;border-radius:50px'><text x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='320' fill='white'>📎</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "social_preview_generator.html",
+      "sizes": "1200x630",
+      "type": "text/html",
+      "form_factor": "wide",
+      "label": "Adorably Analog homepage with Clippy helper and genetics support"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Genetics Support",
+      "short_name": "Genetics",
+      "description": "Get help understanding genetic variants and terminology",
+      "url": "/#genetics",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Clippy Corner",
+      "short_name": "Clippy",
+      "description": "Get helpful tips from your AI assistant",
+      "url": "/#clippy",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📎</text></svg>",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Support Groups",
+      "short_name": "Support",
+      "description": "AI caregiver support for analog beings",
+      "url": "/#support",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💜</text></svg>",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "scope": "/",
+  "id": "adorably-analog-aicbse",
+  "protocol_handlers": [],
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  }
+}
