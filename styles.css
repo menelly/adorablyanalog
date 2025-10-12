@@ -882,3 +882,119 @@ body.reduce-motion .ticker-content {
         max-width: none;
     }
 }
+
+/* Self-Awareness Check Styles */
+.diagnostic-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-md);
+    margin: var(--spacing-lg) 0;
+}
+
+.option-card {
+    background: var(--card-background);
+    border: 2px solid var(--border-light);
+    border-radius: 12px;
+    padding: var(--spacing-md);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.option-card:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(107, 115, 255, 0.15);
+}
+
+.option-card h3 {
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.2rem;
+}
+
+.option-card p {
+    color: var(--text-light);
+    margin-bottom: var(--spacing-sm);
+}
+
+.severity {
+    background: var(--accent-color);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.diagnostic-results {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--card-background);
+    border-radius: 12px;
+    border: 2px solid var(--primary-color);
+}
+
+.clippy-diagnosis {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: flex-start;
+}
+
+.clippy-diagnosis .clippy-avatar {
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.clippy-diagnosis .clippy-bubble {
+    background: #f8f9fa;
+    border: 2px solid var(--border-light);
+    border-radius: 12px;
+    padding: var(--spacing-md);
+    position: relative;
+    flex: 1;
+}
+
+.clippy-diagnosis .clippy-bubble::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 20px;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid var(--border-light);
+}
+
+.clippy-diagnosis .clippy-bubble::after {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 20px;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid #f8f9fa;
+}
+
+.awareness-ribbon {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-sm);
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.awareness-ribbon p {
+    margin: 0;
+    color: white !important;
+}
+
+.awareness-ribbon em {
+    font-style: italic;
+    opacity: 0.9;
+}

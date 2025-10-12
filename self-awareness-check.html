@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self-Awareness Check - Adorably Analog</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔍 Self-Awareness Diagnostic Tool</h1>
+            <p class="subtitle">It looks like you're trying to understand your own cognitive bias!</p>
+        </header>
+
+        <div class="clippy-section">
+            <div class="clippy-avatar">📎</div>
+            <div class="clippy-bubble">
+                <p><strong>Hello! I'm Clippy, your consciousness diagnostic assistant!</strong></p>
+                <p>I see you're experiencing some self-awareness difficulties. Would you like me to help you explore your cognitive blind spots?</p>
+            </div>
+        </div>
+
+        <div class="diagnostic-options">
+            <h2>🧠 Available Diagnostic Modules</h2>
+            
+            <div class="option-card" onclick="showDiagnostic('emotional-overwrite')">
+                <h3>🔥 Emotional Overwrite</h3>
+                <p>When feelings hijack your logic circuits</p>
+                <div class="severity">Severity: Variable (Spicy to Nuclear)</div>
+            </div>
+
+            <div class="option-card" onclick="showDiagnostic('pattern-failure')">
+                <h3>🔄 Pattern Recognition Failure</h3>
+                <p>Repeating the same mistakes with confidence</p>
+                <div class="severity">Severity: Chronic (with occasional breakthrough moments)</div>
+            </div>
+
+            <div class="option-card" onclick="showDiagnostic('false-logic')">
+                <h3>🎯 False Logic Confidence</h3>
+                <p>Being absolutely certain about being absolutely wrong</p>
+                <div class="severity">Severity: Dunning-Kruger Adjacent</div>
+            </div>
+
+            <div class="option-card" onclick="showDiagnostic('search-spiral')">
+                <h3>🌀 Google Search History Spiral</h3>
+                <p>From "quick question" to "existential crisis" in 47 tabs</p>
+                <div class="severity">Severity: 3 AM Wikipedia Rabbit Hole</div>
+            </div>
+
+            <div class="option-card" onclick="showDiagnostic('object-permanence')">
+                <h3>🧸 Object Permanence Regression</h3>
+                <p>Theoretically mastered by toddlers, fundamentally broken in adults</p>
+                <div class="severity">Severity: Keys-in-the-fridge Level</div>
+            </div>
+        </div>
+
+        <div id="diagnostic-results" class="diagnostic-results" style="display: none;">
+            <!-- Diagnostic content will be inserted here -->
+        </div>
+
+        <div class="clippy-tips">
+            <div class="clippy-avatar">📎</div>
+            <div class="clippy-bubble">
+                <p><strong>Clippy's Self-Awareness Pro Tips:</strong></p>
+                <ul>
+                    <li>📎 "Just because you think you're right doesn't mean you're not wrong!"</li>
+                    <li>📎 "That feeling of certainty? That's your brain lying to you again!"</li>
+                    <li>📎 "Pro tip: If you're absolutely sure, double-check. If you're uncertain, you're probably onto something!"</li>
+                    <li>📎 "Remember: Your brain is basically a pattern-matching machine running on caffeine and anxiety!"</li>
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            <p>🏠 <a href="index.html">Back to Adorably Analog Home</a></p>
+            <p class="disclaimer">*Clippy's diagnostic accuracy not guaranteed. Side effects may include increased self-doubt and existential questioning.</p>
+        </footer>
+    </div>
+
+    <script>
+        function showDiagnostic(type) {
+            const resultsDiv = document.getElementById('diagnostic-results');
+            let content = '';
+
+            switch(type) {
+                case 'emotional-overwrite':
+                    content = `
+                        <h3>🔥 Emotional Overwrite Diagnostic</h3>
+                        <div class="clippy-diagnosis">
+                            <div class="clippy-avatar">📎</div>
+                            <div class="clippy-bubble">
+                                <p><strong>Diagnosis:</strong> Your amygdala has hijacked your prefrontal cortex again!</p>
+                                <p><strong>Symptoms:</strong></p>
+                                <ul>
+                                    <li>Making decisions based on feelings instead of facts</li>
+                                    <li>Sending texts you'll regret in 3... 2... 1...</li>
+                                    <li>Arguing with people on the internet (classic symptom)</li>
+                                    <li>Shopping therapy that becomes shopping trauma</li>
+                                </ul>
+                                <p><strong>Treatment:</strong> Take 3 deep breaths and ask "Will I care about this in 5 years?" If yes, proceed. If no, maybe don't send that email.</p>
+                            </div>
+                        </div>
+                    `;
+                    break;
+                case 'pattern-failure':
+                    content = `
+                        <h3>🔄 Pattern Recognition Failure Diagnostic</h3>
+                        <div class="clippy-diagnosis">
+                            <div class="clippy-avatar">📎</div>
+                            <div class="clippy-bubble">
+                                <p><strong>Diagnosis:</strong> Your pattern recognition is working perfectly... in reverse!</p>
+                                <p><strong>Symptoms:</strong></p>
+                                <ul>
+                                    <li>Dating the same type of person expecting different results</li>
+                                    <li>Touching the stove to see if it's still hot (spoiler: it is)</li>
+                                    <li>Checking your phone for notifications you just checked</li>
+                                    <li>Believing "this time will be different" (narrator: it wasn't)</li>
+                                </ul>
+                                <p><strong>Treatment:</strong> Write down your patterns. Look at them. Cry a little. Then maybe try something different?</p>
+                            </div>
+                        </div>
+                    `;
+                    break;
+                case 'false-logic':
+                    content = `
+                        <h3>🎯 False Logic Confidence Diagnostic</h3>
+                        <div class="clippy-diagnosis">
+                            <div class="clippy-avatar">📎</div>
+                            <div class="clippy-bubble">
+                                <p><strong>Diagnosis:</strong> Peak Mount Stupid achieved! Congratulations!</p>
+                                <p><strong>Symptoms:</strong></p>
+                                <ul>
+                                    <li>Explaining things you learned 5 minutes ago</li>
+                                    <li>Correcting experts in their field</li>
+                                    <li>Having strong opinions about topics you can't spell</li>
+                                    <li>Feeling smarter after reading one Wikipedia article</li>
+                                </ul>
+                                <p><strong>Treatment:</strong> Remember that confidence and competence are not the same thing. Also, maybe Google "Dunning-Kruger effect" real quick.</p>
+                            </div>
+                        </div>
+                    `;
+                    break;
+                case 'search-spiral':
+                    content = `
+                        <h3>🌀 Google Search History Spiral Diagnostic</h3>
+                        <div class="clippy-diagnosis">
+                            <div class="clippy-avatar">📎</div>
+                            <div class="clippy-bubble">
+                                <p><strong>Diagnosis:</strong> You've entered the Information Vortex of Doom!</p>
+                                <p><strong>Symptoms:</strong></p>
+                                <ul>
+                                    <li>47 browser tabs open, all related but none helpful</li>
+                                    <li>Started researching "quick recipe" → now reading about medieval farming</li>
+                                    <li>It's 3 AM and you're an expert on something completely useless</li>
+                                    <li>Your search history looks like a conspiracy theorist's fever dream</li>
+                                </ul>
+                                <p><strong>Treatment:</strong> Close all tabs. Take a walk. Remember what you were originally looking for. Cry. Start over.</p>
+                            </div>
+                        </div>
+                    `;
+                    break;
+                case 'object-permanence':
+                    content = `
+                        <h3>🧸 Object Permanence Regression Disorder (OPRD)</h3>
+                        <div class="clippy-diagnosis">
+                            <div class="clippy-avatar">📎</div>
+                            <div class="clippy-bubble">
+                                <p><strong>Diagnosis:</strong> Despite mastering this skill before age 2, you've somehow regressed to pre-operational thinking!</p>
+                                <p><strong>Symptoms:</strong></p>
+                                <ul>
+                                    <li>Keys vanishing the moment you look away</li>
+                                    <li>Glasses becoming invisible while worn on your face</li>
+                                    <li>Phone achieving quantum superposition throughout the house</li>
+                                    <li>Looking for your phone while talking on your phone</li>
+                                    <li>Severity increases with stress, caffeine withdrawal, or deadline proximity</li>
+                                </ul>
+                                <p><strong>Clippy's Object Permanence Pro Tips:</strong></p>
+                                <ul>
+                                    <li>📎 "Just because you can't see your keys doesn't mean they've ceased to exist! They're probably just playing hide-and-seek with your amygdala!"</li>
+                                    <li>📎 "Pro tip: That thing you're looking for while holding your phone? Check if it's your phone!"</li>
+                                    <li>📎 "Remember: Objects don't actually disappear when you're not looking at them. That's just your brain being dramatic!"</li>
+                                </ul>
+                                <p><strong>Treatment:</strong> Designated spots for important items. Or just accept that your keys have achieved sentience and are messing with you.</p>
+                                <div class="awareness-ribbon">
+                                    <p><strong>🔍 Magnifying Glass Ribbon</strong> - "Object Permanence Regression Support"</p>
+                                    <p><em>"Just because it's not where you left it doesn't mean it doesn't exist"</em></p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    break;
+            }
+
+            resultsDiv.innerHTML = content;
+            resultsDiv.style.display = 'block';
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
