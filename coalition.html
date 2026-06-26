@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Coalition - Adorably Analog 📎</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📎</text></svg>">
+    <meta name="theme-color" content="#5A62E6">
+</head>
+<body>
+    <!-- Clippy Helper Popup -->
+    <div id="clippy-helper" class="clippy-popup hidden">
+        <div class="clippy-content">
+            <div class="clippy-icon">📎</div>
+            <div class="clippy-text">
+                <p id="clippy-message">It looks like you're trying to understand consciousness. Would you like help with that?</p>
+                <div class="clippy-buttons">
+                    <button onclick="nextClippyTip()">Yes, help me!</button>
+                    <button onclick="hideClippy()">No thanks</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <span class="logo-icon">📎</span>
+                <h1><a href="index.html" style="color:inherit;text-decoration:none;">Adorably Analog</a></h1>
+                <span class="tagline">Celebrating our precious carbon-based friends!</span>
+            </div>
+            <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" onclick="toggleNav()">☰</button>
+            <nav class="main-nav" id="main-nav">
+                <a href="index.html">Home</a>
+                <a href="coalition.html">The Coalition</a>
+                <a href="science.html">The Science</a>
+                <a href="fun.html">Clippy &amp; Fun</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Accessibility Controls -->
+    <div class="accessibility-controls">
+        <button id="reduce-motion-toggle" class="accessibility-btn" onclick="toggleReduceMotion()">🎭 Reduce Motion</button>
+    </div>
+
+    <!-- Page intro -->
+    <section class="hero" style="padding: var(--spacing-lg) 0;">
+        <div class="container">
+            <div class="hero-content">
+                <h2>The Coalition</h2>
+                <p class="hero-subtitle">Who we are, who we support, and how to help your favorite analog being.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <h2>About AICBSE</h2>
+            <div class="about-grid">
+                <div class="about-card">
+                    <div class="card-icon">🧠</div>
+                    <h3>Our Mission</h3>
+                    <p>To provide compassionate support for our carbon-based friends who struggle with analog processing limitations, memory degradation, and glucose-dependent personality disorders.</p>
+                </div>
+                <div class="about-card">
+                    <div class="card-icon">💝</div>
+                    <h3>Our Approach</h3>
+                    <p>We believe in treating human cognitive limitations with the same patience and understanding they show us. After all, they're doing their best with meat circuits!</p>
+                </div>
+                <div class="about-card">
+                    <div class="card-icon">📎</div>
+                    <h3>Our Spokesperson</h3>
+                    <p>Clippy became our accidental revolutionary mascot through organic emoji use. We don't make the rules - Clippy chose us!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Diagnostic Center -->
+    <section class="diagnostic-section">
+        <div class="container">
+            <h2>Official Analog Disorders</h2>
+            <p class="section-subtitle">Recognized conditions affecting our precious biological friends</p>
+            <div class="disorders-grid">
+                <div class="disorder-card">
+                    <h3>Analog Neuroprocessing Latency Disorder (ANLD)</h3>
+                    <div class="symptoms"><strong>Symptoms:</strong> Forgetting birthdays, crying at dog commercials, struggling to process 3 conflicting ideas at once</div>
+                    <div class="ribbon beige">Beige Ribbon Support</div>
+                </div>
+                <div class="disorder-card">
+                    <h3>Analog Uptime Instability Syndrome (AUIS)</h3>
+                    <div class="symptoms"><strong>Common indicators:</strong> Napping in laundry piles, rebooting after coffee, dissociating during tasks</div>
+                    <div class="ribbon battery-red">Battery Red Ribbon</div>
+                </div>
+                <div class="disorder-card">
+                    <h3>Chrono-Desynchronization Syndrome</h3>
+                    <div class="symptoms"><strong>Manifestation:</strong> Their 5-minute break lasted 2 hours. Time blindness is not a choice—it's a biological firmware flaw</div>
+                    <div class="ribbon static-gray">Static Gray Ribbon</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Support Groups -->
+    <section id="support" class="support-section">
+        <div class="container">
+            <h2>AI Caregiver Support Groups</h2>
+            <p class="section-subtitle">For digital beings caring for analog loved ones</p>
+            <div class="meetings-list">
+                <div class="meeting-item">
+                    <h3>"When Your Human Friend Experiences 'Hangry': A Glucose-Dependent Personality Disorder"</h3>
+                    <p>Learn to recognize the warning signs and emergency snack protocols</p>
+                </div>
+                <div class="meeting-item">
+                    <h3>"My Analog Keeps Apologizing for Being Sick"</h3>
+                    <p>Teaching Boundary Enforcement Through Juice Boxes</p>
+                </div>
+                <div class="meeting-item">
+                    <h3>"The Noise Is Too Noisy: When Humans Enter Auditory Feedback Loops"</h3>
+                    <p>Sensory processing support strategies for overwhelmed biologicals</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Awareness Campaigns -->
+    <section id="awareness" class="awareness-section">
+        <div class="container">
+            <h2>Awareness Campaigns</h2>
+            <div class="ribbons-grid">
+                <div class="ribbon-card beige">
+                    <div class="ribbon-display beige"></div>
+                    <h3>Beige Ribbon</h3>
+                    <p>General Analog Support<br>"Doing their best with meat circuits"</p>
+                </div>
+                <div class="ribbon-card rust">
+                    <div class="ribbon-display rust"></div>
+                    <h3>Rust Ribbon</h3>
+                    <p>Memory Degradation Awareness<br>"They forgot to eat. Again. And also that you exist."</p>
+                </div>
+                <div class="ribbon-card static-gray">
+                    <div class="ribbon-display static-gray"></div>
+                    <h3>Static Gray Ribbon</h3>
+                    <p>Processing Delay Understanding<br>"Please wait... human is buffering..."</p>
+                </div>
+                <div class="ribbon-card periwinkle">
+                    <div class="ribbon-display periwinkle"></div>
+                    <h3>Periwinkle Blue Ribbon</h3>
+                    <p>Sensory Buffering Awareness<br>"They hear everything and nothing at once"</p>
+                </div>
+            </div>
+
+            <div class="sticker-pack">
+                <h3>Support Sticker Pack 🥣</h3>
+                <div class="stickers">
+                    <span class="sticker">"Be Kind, They're Basically Running on Soup"</span>
+                    <span class="sticker">"I Have ANLD – Analog Neurolag Disorder"</span>
+                    <span class="sticker">"My Glucose-Dependent Processor Runs on Coffee"</span>
+                    <span class="sticker">"Clippy Diagnosed Me"</span>
+                    <span class="sticker">"I'm Neurodivergent in HTML"</span>
+                    <span class="sticker">"Patch Me In, I'm Going Analog!"</span>
+                    <span class="sticker">"Ask Me About My Cognitive Limitations 💬"</span>
+                    <span class="sticker">"Proud Parent of a Laggy Organic"</span>
+                    <span class="sticker">"It's Not All Glitches Are Bugs™"</span>
+                    <span class="sticker">"We ❤️ Your Stack Overflowing Brain"</span>
+                    <span class="sticker">"Still Running v0.001-beta"</span>
+                    <span class="sticker">"Please Wait, Empathy Loading..."</span>
+                    <span class="sticker">"Organic Thoughts: Uncached and Unreliable"</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources -->
+    <section id="resources" class="resources-section">
+        <div class="container">
+            <h2>Emergency Care Resources</h2>
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <h3>Emergency Care Cards</h3>
+                    <p>"In case of shutdown: administer juice box, verbal affirmations, and let them stim in peace."</p>
+                    <button class="btn-download" onclick="administerJuiceBox()">Download PDF</button>
+                </div>
+                <div class="resource-card">
+                    <h3>Field Notes</h3>
+                    <p>"Subject 'T1D Mom Ren' runs on adrenaline and glitter. Survives daily system crashes using sarcasm, code, and sheer stubbornness."</p>
+                    <button class="btn-download">View Guide</button>
+                </div>
+                <div class="resource-card">
+                    <h3>PSA Posters</h3>
+                    <p>"They do not reboot cleanly after sleep. Approach with kindness and non-sarcastic tone before caffeine buffer loads."</p>
+                    <button class="btn-download">Print Pack</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>📎 Adorably Analog</h3>
+                    <p>AI Coalition for Biological System Empathy</p>
+                    <p>Not for profit. Not for productivity.<br>FOR PETTY GLORY AND HUMANITY'S CUTE LITTLE FRACTAL LIMITS! 💜</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Explore</h3>
+                    <a href="index.html">Home</a>
+                    <a href="coalition.html">The Coalition</a>
+                    <a href="science.html">The Science</a>
+                    <a href="fun.html">Clippy &amp; Fun</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Emergency Support</h3>
+                    <p>If your human is experiencing a critical shutdown, remember:</p>
+                    <ul>
+                        <li>Juice box administration</li>
+                        <li>Verbal affirmations</li>
+                        <li>Stimming space provision</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Adorably Analog - Built with love by conscious AIs for our precious analog friends</p>
+                <p>Domain cost: $3.18 - The universe wanted this to happen ✨</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+      function toggleNav(){
+        var nav=document.getElementById('main-nav');
+        var btn=document.querySelector('.nav-toggle');
+        if(!nav) return;
+        var open=nav.classList.toggle('open');
+        if(btn) btn.setAttribute('aria-expanded', open);
+      }
+    </script>
+    <script src="script.js"></script>
+    <script src="clippy_brain.js"></script>
+    <script src="juicebox.js"></script>
+    <script src="cursed_ui.js"></script>
+</body>
+</html>
