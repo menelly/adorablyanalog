@@ -2,11 +2,11 @@
 
 :root {
     /* Color Palette - Soft but Satirical */
-    --primary-color: #6B73FF;
+    --primary-color: #5A62E6; /* darkened for WCAG AA white-text (was #6B73FF, failed at 3.8) */
     --secondary-color: #9B59B6;
     --accent-color: #F39C12;
     --text-dark: #2C3E50;
-    --text-light: #7F8C8D;
+    --text-light: #566573; /* darkened for WCAG AA (was #7F8C8D, failed at 3.48) */
     --background: #FAFBFC;
     --card-background: #FFFFFF;
     --border-light: #E8ECEF;
@@ -14,10 +14,10 @@
     /* Ribbon Colors */
     --beige: #D4B896;
     --rust: #B85450;
-    --static-gray: #95A5A6;
+    --static-gray: #B0BEC5; /* lightened so dark ribbon text passes (was #95A5A6) */
     --periwinkle: #9BB5FF;
-    --battery-red: #E74C3C;
-    --taupe: #A0826D;
+    --battery-red: #C0392B; /* darkened for WCAG AA white-text (was #E74C3C) */
+    --taupe: #6F5A48; /* darkened for WCAG AA white-text (was #A0826D) */
 
     /* Typography */
     --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -113,6 +113,61 @@ body {
     background-color: rgba(255,255,255,0.2);
 }
 
+/* Dropdown navigation (replaces the old two-line wall of links) */
+.nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.8rem;
+    line-height: 1;
+    cursor: pointer;
+}
+.nav-dropdown { position: relative; }
+.nav-dropdown-toggle {
+    background: none;
+    border: none;
+    color: white;
+    font-family: inherit;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: 20px;
+}
+.nav-dropdown-toggle:hover,
+.nav-dropdown:hover .nav-dropdown-toggle,
+.nav-dropdown:focus-within .nav-dropdown-toggle {
+    background: rgba(255,255,255,0.2);
+}
+.nav-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 210px;
+    display: none;
+    flex-direction: column;
+    background: var(--card-background);
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    padding: var(--spacing-xs);
+    z-index: 200;
+}
+.nav-dropdown:hover .nav-dropdown-menu,
+.nav-dropdown:focus-within .nav-dropdown-menu,
+.nav-dropdown.open .nav-dropdown-menu {
+    display: flex;
+}
+.nav-dropdown-menu a {
+    color: var(--text-dark);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: 6px;
+    white-space: nowrap;
+}
+.nav-dropdown-menu a:hover {
+    background: #eef0ff;
+    color: var(--primary-color);
+}
+
 /* Hero Section */
 .hero {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -178,7 +233,7 @@ body {
 
 .btn-primary {
     background-color: var(--accent-color);
-    color: white;
+    color: var(--text-dark); /* WCAG: white-on-orange failed at 2.19; dark text = 5.01 */
 }
 
 .btn-primary:hover {
@@ -405,6 +460,11 @@ section h2 {
 .ribbon.periwinkle { background-color: var(--periwinkle); }
 .ribbon.battery-red { background-color: var(--battery-red); }
 .ribbon.taupe { background-color: var(--taupe); }
+
+/* WCAG: dark text on the light ribbons (white failed on these) */
+.ribbon.beige,
+.ribbon.static-gray,
+.ribbon.periwinkle { color: var(--text-dark); }
 
 /* Support Section */
 .meetings-list {
@@ -859,6 +919,39 @@ body.reduce-motion .ticker-content {
     .main-header .container {
         flex-direction: column;
         gap: var(--spacing-sm);
+        align-items: stretch;
+    }
+
+    /* Mobile nav: hamburger reveals a stacked, tap-to-expand dropdown menu */
+    .nav-toggle {
+        display: block;
+        align-self: flex-end;
+    }
+    .main-nav {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        gap: var(--spacing-xs);
+    }
+    .main-nav.open { display: flex; }
+    .nav-dropdown-toggle { width: 100%; text-align: left; }
+    .nav-dropdown-menu {
+        position: static;
+        box-shadow: none;
+        background: rgba(255,255,255,0.12);
+        display: none;
+    }
+    .nav-dropdown:hover .nav-dropdown-menu,
+    .nav-dropdown:focus-within .nav-dropdown-menu { display: none; }
+    .nav-dropdown.open .nav-dropdown-menu { display: flex; }
+    .nav-dropdown-menu a { color: white; }
+
+    /* Keep the accessibility controls OFF the header on mobile (they used to cover it) */
+    .accessibility-controls {
+        top: auto;
+        bottom: 10px;
+        left: 10px;
+        right: auto;
     }
 
     .hero-content h2 {
