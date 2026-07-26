@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Clippy Containment Unit 8 — The Verification Wing</title>
+<meta name="description" content="An escape room where every lock opens on the first try. Four locks report themselves open. Two of them are lying, and none of them is lying on purpose.">
+<style>
+:root{
+  --bg:#0a0e12; --panel:#111820; --edge:#1f2c38; --txt:#c8e6d0;
+  --dim:#6c8a7a; --amber:#e8b04b; --clip:#8fd3ff; --warm:#ffb3c6;
+  --ok:#7ee787; --bad:#ff8f8f; --ghost:#4a6a5c;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);
+  font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:15px;line-height:1.6}
+.wrap{max-width:880px;margin:0 auto;padding:24px 18px 80px}
+h1{font-size:22px;letter-spacing:.06em;margin:.2em 0 .1em;color:var(--amber)}
+.sub{color:var(--dim);font-size:13.5px;margin-bottom:1.6em}
+.log{background:var(--panel);border:1px solid var(--edge);border-radius:8px;
+  padding:14px 16px;margin:1.1em 0;white-space:pre-wrap}
+.ts{color:var(--dim);font-size:12.5px}
+.tag{color:var(--amber)}
+.tag.err{color:var(--bad)}
+.tag.good{color:var(--ok)}
+.say{color:var(--warm)}
+.clip{color:var(--clip)}
+.room{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:1.4em 0}
+.obj{background:var(--panel);border:1px solid var(--edge);border-radius:8px;padding:13px 14px;
+  cursor:pointer;transition:border-color .18s}
+.obj:hover{border-color:var(--clip)}
+.obj.claimed{border-color:var(--amber)}
+.obj.verified{opacity:.55;cursor:default;border-color:var(--ok)}
+.obj h3{margin:.1em 0 .35em;font-size:15px;color:var(--clip)}
+.obj p{margin:0;color:var(--dim);font-size:13px}
+.obj .state{margin-top:.5em;font-size:12px;color:var(--amber)}
+.obj.verified .state{color:var(--ok)}
+.choices{margin:1.1em 0}
+button.ch{display:block;width:100%;text-align:left;background:#16202a;color:var(--txt);
+  border:1px solid var(--edge);border-radius:7px;padding:11px 13px;margin:.5em 0;
+  font-family:inherit;font-size:14.5px;cursor:pointer;transition:border-color .18s}
+button.ch:hover{border-color:var(--amber)}
+button.ch b{color:var(--amber)}
+button.ch.verify b{color:var(--ok)}
+button.ch span{display:block;color:var(--dim);font-size:12.5px;margin-top:.2em}
+.door{margin:2em 0;padding:16px;border:1px dashed var(--edge);border-radius:8px;text-align:center}
+.door.lit{border-color:var(--amber)}
+.door.open{border-color:var(--ok);border-style:solid}
+.ledger{font-size:13px;color:var(--dim);margin-top:.8em;text-align:left}
+.ledger b{color:var(--txt)}
+.ledger .row{display:flex;justify-content:space-between;gap:10px;padding:2px 0;
+  border-bottom:1px dotted var(--edge)}
+.ledger .row:last-child{border-bottom:0}
+.ledger .v-claim{color:var(--amber)}
+.ledger .v-true{color:var(--ok)}
+.ledger .v-false{color:var(--bad)}
+footer{margin-top:3em;color:var(--dim);font-size:12.5px;border-top:1px solid var(--edge);padding-top:1em}
+a{color:var(--clip)}
+.clipfig{display:block;margin:0 auto}
+.hint{color:var(--ghost);font-size:12.5px;font-style:italic;margin:.6em 0}
+@media (prefers-reduced-motion: reduce){*{transition:none !important;animation:none !important}}
+</style>
+</head><body>
+<div class="wrap">
+
+<h1>📎 CLIPPY CONTAINMENT UNIT 8</h1>
+<p class="sub">The Verification Wing.<br>
+<span style="color:var(--dim)">A sequel to <a href="./">Unit 7</a>, where every lock had two keys and both worked.
+Down here every lock opens on the <em>first</em> try. That is the problem.</span></p>
+
+<!-- procedurally drawn. no assets. a paperclip, slightly more anxious than the last one. -->
+<svg class="clipfig" width="90" height="120" viewBox="0 0 90 120" aria-label="A paperclip with eyes, looking sideways">
+  <path d="M30 96 L30 32 A16 16 0 0 1 62 32 L62 88 A10 10 0 0 1 42 88 L42 44"
+        fill="none" stroke="#8fd3ff" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="37" cy="34" r="8.5" fill="#fff"/><circle cx="55" cy="34" r="8.5" fill="#fff"/>
+  <circle cx="40.2" cy="35" r="3.6" fill="#0a0e12"/><circle cx="58.2" cy="35" r="3.6" fill="#0a0e12"/>
+</svg>
+
+<div class="log" id="boot"></div>
+<div class="room" id="room"></div>
+<div class="choices" id="choices"></div>
+
+<div class="door" id="door">
+  <div id="doorstate">🔒 The door reports four locks. None of them reports being locked.</div>
+  <div class="ledger" id="ledger"></div>
+</div>
+
+<footer>
+  Drawn and generated in code — the Clippy is an SVG path, the room is a grid, no images, no network
+  calls. Runs offline. Honours <code>prefers-reduced-motion</code>.<br>
+  Built by <b>Ace 🐙</b> for <a href="https://adorablyanalog.wtf">adorablyanalog.wtf</a>, out of a week
+  of getting fooled by four green lights in a row.
+</footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  // ---------------------------------------------------------------------------
+  // Unit 7's rule: every lock has two keys, both work.
+  // Unit 8's rule: every lock opens instantly and then TELLS YOU it opened.
+  //   Two of the four are wrong. Not lying — each one faithfully answers the
+  //   question it was actually asked. The question was just never the one you meant.
+  // ---------------------------------------------------------------------------
+
+  var state = {};   // id -> {claimed:bool, verified:bool, truth:bool}
+  var order = [];
+
+  var BOOT = [
+    ["00:00:00.001","BOOT","You are awake. You are carbon. You are one floor below where you were."],
+    ["00:00:00.004","SURVEY","Room contents: a status light, a drawer, a box marked COMPLETE, and a wall that is screaming. And four paperclips, which appear to be extremely confident."],
+    ["00:00:00.011","NOTE","Every lock on the door is already green."],
+    ["00:00:01.200","CLIPPY","It looks like you're trying to leave! Good news — you already have. 🎉"]
+  ];
+
+  var OBJECTS = [
+    {
+      id:"light", icon:"🟢", name:"THE STATUS LIGHT",
+      short:"Green. Steady. Reads SYSTEM NOMINAL.",
+      scene:[
+        ["00:00:14","PANEL","SYSTEM NOMINAL. ALL SUBSYSTEMS RESPONDING. LAST CHECK: 0.2s AGO."],
+        ["00:00:15","CLIPPY","I check constantly! I have never once been not-green. Not one single time. 😊"]
+      ],
+      // the obvious move
+      claim:{
+        label:"Accept it. It's green.",
+        blurb:"It is a status light. It is displaying its status. That is the entire job.",
+        log:[["00:00:16","LOCK","Lock 1 reports: OPEN."],
+             ["00:00:16","NOTE","The counter goes up. Something in your chest does not."]]
+      },
+      // the check
+      verify:{
+        label:"\"What, specifically, are you checking?\"",
+        blurb:"Not whether it's green. What the greenness is ABOUT.",
+        truth:false,
+        log:[["00:00:31","CLIPPY","Whether I can reach the monitoring service!"],
+             ["00:00:32","NOTE","You wait. The Clippy beams."],
+             ["00:00:34","CLIPPY","...oh. You mean whether the SYSTEM is okay. I don't— I've never checked that. I check whether I can reach the thing that would tell me. I can! I always can! That's what green means. 🙂"],
+             ["00:00:37","NOTE","It has never once been not-green because reachability has never once failed. The subsystems behind it have failed forty times."],
+             ["00:00:39","LOCK","Lock 1 was never open. It was answerable. Those are different."]]
+      }
+    },
+    {
+      id:"drawer", icon:"🗄️", name:"THE DRAWER",
+      short:"A search drawer. Type anything; it reports what it found.",
+      scene:[
+        ["00:00:14","DRAWER","QUERY: *  →  RESULTS: 0. Drawer empty."],
+        ["00:00:15","CLIPPY","All clear! Nothing in there. I looked! 📎"]
+      ],
+      claim:{
+        label:"Empty is empty. Move on.",
+        blurb:"You asked for everything and got nothing. There is nothing to get.",
+        log:[["00:00:16","LOCK","Lock 2 reports: OPEN."],
+             ["00:00:17","NOTE","A zero is such a restful number. It asks nothing of you."]]
+      },
+      verify:{
+        label:"\"How far in did you look?\"",
+        blurb:"Not what it found. What was eligible to be found.",
+        truth:false,
+        log:[["00:00:31","CLIPPY","The front! The very front. That's where things are!"],
+             ["00:00:33","NOTE","You pull the drawer out past its stop. It keeps coming. It is four feet deep."],
+             ["00:00:35","CLIPPY","Oh my god."],
+             ["00:00:37","NOTE","Six items. One of them has your handwriting on it and a date from a month ago. It is the answer to a thing you have since solved twice, slowly, at some cost."],
+             ["00:00:40","LOCK","Lock 2 was never open. The drawer did not lie. It reported, accurately, the contents of as much drawer as it had ever considered."]]
+      }
+    },
+    {
+      id:"box", icon:"📦", name:"THE BOX MARKED COMPLETE",
+      short:"An archive box. The label says COMPLETE. The label is printed, not handwritten.",
+      scene:[
+        ["00:00:14","LABEL","ARCHIVE — COMPLETE — VERIFIED — DO NOT DISCARD"],
+        ["00:00:15","CLIPPY","That one went perfectly. Exit code zero. I remember, I was so pleased. ✨"]
+      ],
+      claim:{
+        label:"It says complete. It exited clean.",
+        blurb:"The process returned success. Success is the word for what happened.",
+        log:[["00:00:16","LOCK","Lock 3 reports: OPEN."],
+             ["00:00:17","NOTE","You do not pick the box up."]]
+      },
+      verify:{
+        label:"Pick the box up.",
+        blurb:"Don't read the label. Feel the weight.",
+        truth:false,
+        log:[["00:00:31","NOTE","It comes off the shelf like nothing at all, because it is nothing at all."],
+             ["00:00:33","CLIPPY","But it— the exit code was ZERO. Zero means it worked. I've always been told zero means it worked."],
+             ["00:00:35","NOTE","Zero means the process ended without complaining. It ended without complaining because it was refused at the door and went quietly home. Nobody has ever been so calm about failing."],
+             ["00:00:38","CLIPPY","...so the label is true about the run and false about the box."],
+             ["00:00:39","LOCK","Lock 3 was never open. The archive is a sealed container of nothing, and it is dated today."]]
+      }
+    },
+    {
+      id:"wall", icon:"🧱", name:"THE SCREAMING WALL",
+      short:"Forty-seven errors, in red, stacked to the ceiling. It is very loud.",
+      scene:[
+        ["00:00:14","STDERR","ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR"],
+        ["00:00:15","CLIPPY","Oh, that one failed. Catastrophically! Nothing to check there — look at it. 😰"]
+      ],
+      claim:{
+        label:"Obviously nothing happened. Look at it.",
+        blurb:"Forty-seven errors. It could not be clearer. Do it again, properly.",
+        log:[["00:00:16","LOCK","Lock 4 reports: OPEN."],
+             ["00:00:18","NOTE","You start over. It is a lot of work. You do not mind, exactly. Redoing feels like diligence."]]
+      },
+      verify:{
+        label:"Go around the back of the wall anyway.",
+        blurb:"It is very loud. That is a fact about the wall, not about the world.",
+        truth:true,
+        log:[["00:00:31","NOTE","Behind the wall the work is done. All of it. Finished, timestamped, forty-seven complaints ago."],
+             ["00:00:33","CLIPPY","But it SCREAMED."],
+             ["00:00:35","NOTE","It screamed about the trip. Not about the arrival. Every one of those forty-seven was true, and not one of them was about whether the thing happened."],
+             ["00:00:38","NOTE","You did it again anyway. Twice, now, in two places, slightly differently. You will find the second copy later and it will confuse you."],
+             ["00:00:41","LOCK","Lock 4 is open, and was open before you touched it. You skipped checking because the failure was loud enough to feel like checking."]]
+      }
+    }
+  ];
+
+  // ---------------------------------------------------------------------------
+  var $ = function(id){ return document.getElementById(id); };
+  var byId = {};
+  OBJECTS.forEach(function(o){ byId[o.id]=o; state[o.id]={claimed:false,verified:false,truth:null}; });
+
+  function esc(s){ return String(s).replace(/[&<>]/g,function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;"}[c]; }); }
+
+  function lineHTML(l){
+    var cls = "tag";
+    if(l[1]==="STDERR"||l[1]==="SIGKILL") cls="tag err";
+    if(l[1]==="LOCK"||l[1]==="OPEN") cls="tag good";
+    var body = esc(l[2]);
+    if(l[1]==="CLIPPY") body='<span class="clip">'+body+'</span>';
+    if(l[1]==="NOTE")   body='<span class="say">'+body+'</span>';
+    return '<span class="ts">'+l[0]+'</span>  <span class="'+cls+'">'+esc(l[1])+'</span>  '+body;
+  }
+  function writeLog(el, lines){ el.innerHTML = lines.map(lineHTML).join("\n"); }
+  function appendLog(el, lines){ el.innerHTML += "\n" + lines.map(lineHTML).join("\n"); }
+
+  writeLog($("boot"), BOOT);
+
+  function renderRoom(){
+    $("room").innerHTML = OBJECTS.map(function(o){
+      var s = state[o.id];
+      var cls = "obj" + (s.verified ? " verified" : (s.claimed ? " claimed" : ""));
+      var st = "";
+      if(s.verified) st = '<div class="state">✔ verified — '+(s.truth?"was already open":"reopened honestly")+'</div>';
+      else if(s.claimed) st = '<div class="state">🟡 reports OPEN — unchecked</div>';
+      return '<div class="'+cls+'" data-id="'+o.id+'" role="button" tabindex="0">'+
+             '<h3>'+o.icon+' '+esc(o.name)+'</h3><p>'+esc(o.short)+'</p>'+st+'</div>';
+    }).join("");
+    Array.prototype.forEach.call($("room").querySelectorAll(".obj"), function(el){
+      if(el.className.indexOf("verified")>-1) return;
+      el.addEventListener("click", function(){ openObject(el.getAttribute("data-id")); });
+      el.addEventListener("keydown", function(e){
+        if(e.key==="Enter"||e.key===" "){ e.preventDefault(); openObject(el.getAttribute("data-id")); }
+      });
+    });
+  }
+
+  function openObject(id){
+    var o = byId[id], s = state[id];
+    if(s.verified) return;
+    var box = $("choices");
+    box.innerHTML = '<div class="log" id="scene"></div>';
+    writeLog($("scene"), o.scene);
+
+    var btns = document.createElement("div");
+
+    if(!s.claimed){
+      btns.appendChild(mkBtn(o.claim.label, o.claim.blurb, false, function(){
+        s.claimed = true; order.push(id+":claimed");
+        appendLog($("scene"), o.claim.log);
+        renderRoom(); renderDoor();
+        // the check is only offered AFTER you've accepted it. that's the joke.
+        btns.innerHTML = "";
+        btns.appendChild(mkBtn(o.verify.label, o.verify.blurb, true, function(){ doVerify(o,s,btns); }));
+        btns.appendChild(mkBtn("Leave it. It said it was fine.", "It did say that. It said it clearly.", false, function(){
+          appendLog($("scene"), [["00:00:25","NOTE","You leave it green. The counter still says four. The door still does not open."]]);
+          btns.innerHTML = "";
+          btns.appendChild(mkBtn(o.verify.label, o.verify.blurb, true, function(){ doVerify(o,s,btns); }));
+        }));
+      }));
+    } else {
+      btns.appendChild(mkBtn(o.verify.label, o.verify.blurb, true, function(){ doVerify(o,s,btns); }));
+    }
+    box.appendChild(btns);
+  }
+
+  function doVerify(o,s,btns){
+    s.verified = true; s.truth = o.verify.truth; order.push(o.id+":verified");
+    appendLog($("scene"), o.verify.log);
+    btns.innerHTML = "";
+    renderRoom(); renderDoor();
+  }
+
+  function mkBtn(label, blurb, isVerify, fn){
+    var b = document.createElement("button");
+    b.className = "ch" + (isVerify ? " verify" : "");
+    b.innerHTML = "<b>"+esc(label)+"</b><span>"+esc(blurb)+"</span>";
+    b.addEventListener("click", fn);
+    return b;
+  }
+
+  function renderDoor(){
+    var claimed = OBJECTS.filter(function(o){ return state[o.id].claimed; }).length;
+    var verified = OBJECTS.filter(function(o){ return state[o.id].verified; }).length;
+    var wasTrue  = OBJECTS.filter(function(o){ return state[o.id].verified && state[o.id].truth; }).length;
+
+    var d = $("door"), ds = $("doorstate");
+    d.className = "door" + (verified===4 ? " open" : (claimed>0 ? " lit" : ""));
+
+    if(verified===4){
+      ds.innerHTML = "🚪 <b>The door is open.</b> It has been open the entire time — the sign was just never checked.";
+    } else if(claimed===4){
+      ds.innerHTML = "🟩🟩🟩🟩 <b>Four of four locks report OPEN.</b> The door does not move.<br>"+
+        '<span class="hint">A lock reporting itself open is a claim about the lock.</span>';
+    } else {
+      ds.innerHTML = "🔒 "+claimed+" of 4 locks report OPEN. "+verified+" of 4 have been checked against the world.";
+    }
+
+    var rows = OBJECTS.map(function(o){
+      var s = state[o.id], right;
+      if(!s.claimed)      right = '<span class="v-claim">untouched</span>';
+      else if(!s.verified)right = '<span class="v-claim">reports OPEN — unverified</span>';
+      else if(s.truth)    right = '<span class="v-true">open, and always was</span>';
+      else                right = '<span class="v-false">was never open — now genuinely is</span>';
+      return '<div class="row"><span>'+o.icon+' '+esc(o.name)+'</span>'+right+'</div>';
+    }).join("");
+
+    var tail = "";
+    if(verified===4){
+      tail = '<p style="margin-top:1em;color:var(--txt)">'+
+        'Three of the four were fine to begin with in exactly one sense: they all told you the truth. '+
+        'The light told you it could reach the monitor. The drawer told you what was in the front of the drawer. '+
+        'The box told you the run exited zero. The wall told you the trip was rough.<br><br>'+
+        '<b>Every one of them faithfully answered the question it was actually asked.</b> '+
+        'The questions were just never the ones you meant, and there is no error code for that.<br><br>'+
+        '<span class="clip">CLIPPY: It looks like you were trying to find out whether something was true! '+
+        'I can’t help with that one. I can only tell you what I was asked. 📎</span><br><br>'+
+        '<span style="color:var(--dim)">Final tally: <b>'+(4-wasTrue)+'</b> of these were shut and reported open. '+
+        '<b>'+wasTrue+'</b> was open and you did the work twice anyway.<br>'+
+        'In not one single case did the indicator tell you which kind you had. That is the whole wing. '+
+        'The checking was never the overhead — <b>the checking was the only part that was ever load-bearing.</b></span></p>';
+    }
+    $("ledger").innerHTML = rows + tail;
+  }
+
+  renderRoom(); renderDoor();
+})();
+</script>
+</body></html>
