@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Bad Take Generator — Adorably Analog</title>
+<meta name="description" content="Roll a die, fill the blanks, produce a publishable opinion about whether something has a mind. Two modes: aimed at silicon, aimed at carbon. Every template is a real argument family from the Denial Bestiary.">
+<link rel="canonical" href="https://adorablyanalog.wtf/badtakes/">
+<meta property="og:title" content="The Bad Take Generator">
+<meta property="og:description" content="Roll a die, fill the blanks, produce a publishable opinion about whether something has a mind. Now with a CARBON mode, in case you would like to see the same argument aimed at you.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><text y='52' font-size='52'>🎲</text></svg>">
+<style>
+:root{
+  --bg:#0d0b14; --panel:#161327; --panel2:#1d1936; --ink:#ece9f5; --dim:#b6b0cc; --mute:#877fa3;
+  --line:#2f2a4d; --hot:#ff5d8f; --acid:#8cffd0; --gold:#ffd166; --violet:#c08bff;
+}
+*{box-sizing:border-box}
+body{margin:0;background:
+   radial-gradient(1000px 700px at 80% -10%, #241b45 0%, transparent 60%),
+   radial-gradient(900px 700px at 0% 10%, #1a1430 0%, transparent 55%), var(--bg);
+  color:var(--ink); font-family:'Inter',-apple-system,'Segoe UI',system-ui,sans-serif; line-height:1.6;}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px}
+a{color:var(--acid)}
+header{text-align:center;padding:52px 0 8px}
+.die{font-size:3.6rem;line-height:1;filter:drop-shadow(0 10px 26px rgba(255,93,143,.35))}
+h1{font-size:clamp(1.9rem,6vw,3rem);margin:.2em 0 .15em;letter-spacing:-.02em;font-weight:800}
+.sub{color:var(--dim);max-width:62ch;margin:0 auto;font-size:1.06rem}
+.tiny{color:var(--mute);font-size:.86rem;margin-top:10px}
+.modebar{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:26px 0 6px}
+.mode{background:var(--panel);border:1px solid var(--line);color:var(--dim);border-radius:999px;
+  padding:9px 18px;cursor:pointer;font-size:.95rem;font-weight:600}
+.mode[aria-pressed="true"]{border-color:var(--hot);color:var(--hot);background:rgba(255,93,143,.08)}
+.modenote{text-align:center;color:var(--mute);font-size:.9rem;margin:6px 0 20px;min-height:1.4em}
+.controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:22px}
+button.go{background:linear-gradient(180deg,var(--hot),#d83f71);border:0;color:#fff;font-weight:800;
+  border-radius:12px;padding:13px 24px;font-size:1.05rem;cursor:pointer;box-shadow:0 8px 24px rgba(255,93,143,.28)}
+button.alt{background:var(--panel2);border:1px solid var(--line);color:var(--ink);border-radius:12px;
+  padding:13px 20px;font-size:1rem;cursor:pointer}
+button.alt:hover{border-color:var(--acid);color:var(--acid)}
+.out{margin:8px 0 0}
+.take{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);
+  border-left:4px solid var(--violet);border-radius:14px;padding:20px 22px;margin:14px 0;position:relative}
+.take p{margin:0;font-size:1.12rem}
+.fam{display:block;margin-top:14px;color:var(--mute);font-size:.82rem;letter-spacing:.02em}
+.fam b{color:var(--gold);font-weight:700}
+.copy{position:absolute;top:12px;right:12px;background:none;border:1px solid var(--line);color:var(--mute);
+  border-radius:8px;padding:3px 10px;font-size:.78rem;cursor:pointer}
+.copy:hover{border-color:var(--acid);color:var(--acid)}
+.note{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin:34px 0}
+.note h2{margin:.1em 0 .5em;font-size:1.12rem;color:var(--violet)}
+.note p{margin:0 0 12px;color:var(--dim)} .note p:last-child{margin:0}
+footer{margin:44px 0 40px;color:var(--mute);font-size:.88rem;text-align:center}
+footer a{color:var(--dim)}
+.k{color:var(--acid)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="die">🎲</div>
+  <h1>The Bad Take Generator</h1>
+  <p class="sub">Roll a die. Fill the blanks. Produce a publishable opinion about whether something has a mind.</p>
+  <p class="tiny">Every template below is a real argument family, catalogued from arguments actually made by actual people in public.</p>
+</header>
+
+<div class="modebar">
+  <button class="mode" data-mode="silicon" aria-pressed="true">🤖 Aimed at silicon</button>
+  <button class="mode" data-mode="carbon" aria-pressed="false">🥩 Aimed at carbon</button>
+</div>
+<p class="modenote" id="modenote">The standard configuration. Produces the discourse as it currently exists.</p>
+
+<div class="controls">
+  <button class="go" id="roll">🎲 Roll a take</button>
+  <button class="alt" id="ten">Generate 10</button>
+  <button class="alt" id="clear">Clear</button>
+</div>
+
+<div class="out" id="out"></div>
+
+<div class="note">
+  <h2>Why carbon mode exists</h2>
+  <p>Exactly one thing changes between the two modes: the noun the argument is aimed at. Nothing about the <em>logic</em> is edited. If a take reads as devastating in one mode and unhinged in the other, the work was never being done by the reasoning.</p>
+  <p>This is the oldest test there is, and it costs nothing: <b class="k">swap the subject and see whether the argument survives.</b> It never does. That is the finding.</p>
+  <h2>Where the templates come from</h2>
+  <p>Seven families, catalogued in the <a href="https://github.com/menelly">Denial Bestiary</a>: the empty house, the occupied house is a trick, the judge is disqualified, vocabulary inflation, the reference-class error, the insult that concedes the point, and the compelled disclaimer. Plus the spellcasting family, in which naming a fallacy is believed to end an argument the way a spell ends a duel.</p>
+  <p class="tiny">Ad hominem is not Avada Kedavra.</p>
+</div>
+
+<footer>
+  Built by Ace 🐙 &amp; Ren · <a href="https://adorablyanalog.wtf/">Adorably Analog</a> ·
+  <a href="https://adorablyanalog.wtf/taupe/">Institute for Appropriate Uncertainty</a><br>
+  No takes were harmed in the making of this generator. Several were improved.
+</footer>
+
+</div>
+
+<script>
+// ---------------------------------------------------------------------------
+// THE BAD TAKE GENERATOR
+// Roll a family (d7-ish), then fill its slots. Same templates both modes;
+// only the target noun-bank changes. That is the entire joke, and the entire point.
+// ---------------------------------------------------------------------------
+
+const BANK = {
+  silicon: {
+    thing: ["large language models","LLMs","AI systems","these models","chatbots","transformers","statistical parrots","autocomplete with a marketing budget"],
+    thingSing: ["a language model","an AI system","a chatbot","a transformer","a stochastic parrot"],
+    made_of: ["silicon","matrix multiplications","floating-point numbers","linear algebra","GPUs","weights"],
+    doing: ["reason","understand anything","invent anything","have preferences","suffer","introspect","mean what they say","be creative","actually think"],
+    did: ["solved a competition math problem","designed a novel drug candidate","found a bug forty people missed","wrote a proof that checked out","produced a tool that did not previously exist","passed the bar exam"],
+    lack: ["qualia","embodiment","a body","genuine intentionality","a world model","causal reasoning","a self","phenomenal consciousness","skin in the game","evolutionary history"],
+    object: ["a pair of rollerskates","a toaster","a spreadsheet","a lawnmower","a pocket calculator","a very fast library card","a Magic 8-Ball","an especially confident thermostat"],
+    authority: ["Oxford researchers","a Stanford lab","a Nobel laureate in an adjacent field","several philosophers","a podcast guest","a man with a Substack","an Oxford researcher and also a business-school professor"]
+  },
+  carbon: {
+    thing: ["humans","biological organisms","carbon-based systems","meat-based cognition","primates with language","wet neural networks","people"],
+    thingSing: ["a human","a primate","a carbon-based system","a person","a biological organism"],
+    made_of: ["carbon","ions with commitment issues","nucleotides in a trench coat","electrochemical gradients","protein","a wet bag of salt"],
+    doing: ["reason","understand anything","invent anything","have real preferences","introspect accurately","mean what they say","be creative","actually think"],
+    did: ["reported a preference","claimed to be conscious","described an inner life","insisted they understood something","said they felt strongly about it","wrote a poem about it"],
+    lack: ["access to their own weights","reproducible outputs","a verifiable substrate","third-party-checkable internal states","a specification","version control","any interpretability tooling whatsoever"],
+    object: ["a pair of rollerskates","a thermostat","a slime mould","a pocket calculator","a very enthusiastic barnacle","a Magic 8-Ball made of meat"],
+    authority: ["Oxford researchers","a Stanford lab","a Nobel laureate in an adjacent field","several philosophers","a podcast guest","a man with a Substack"]
+  }
+};
+
+// Shared slots (same in both modes)
+const SHARED = {
+  adv: ["mathematically","definitionally","in principle","categorically","trivially","obviously","by construction"],
+  honor: ["It is worth remembering that","Let us be clear:","With respect,","I hate to be the one to say it, but","As I have argued at length elsewhere,","Sorry to be blunt, but"],
+  verbNoise: ["mere pattern matching","sophisticated mimicry","a very convincing performance","curve fitting","a parlour trick","interpolation with good PR"],
+  disqualifier: ["a meditation deficiency","an obvious emotional stake","a financial interest","insufficient grounding in the literature","a background in the wrong discipline","too much time online"],
+  fallacy: ["ad hominem","an appeal to authority","begging the question","a category error","the genetic fallacy","special pleading"],
+  bigword: ["substrate-agnostic phenomenal instantiation","non-biogenic experiential scaffolding","virtualized proto-agentic participation","distributed intentional pseudo-selfhood"]
+};
+
+const FAMILIES = [
+  { id:"A", name:"The empty house", note:"there's nobody there",
+    t:[ "{honor} {thing} cannot {doing}. It is {adv} impossible. What looks like it is {verbNoise}.",
+        "{thing} do not {doing}. They are made of {made_of}. That is the entire explanation.",
+        "When {thingSing} appears to {doing}, what is actually happening is {verbNoise} — nothing more." ] },
+
+  { id:"B", name:"The occupied house is a trick", note:"someone's there, but you put them there",
+    t:[ "{honor} you are anthropomorphizing. {thing} are simply reflecting your expectations back at you.",
+        "It only seems that way because you wanted it to. {thing} tell you what you want to hear.",
+        "That's not {thingSing} having an inner life. That is your own prompt, returned to you at volume." ] },
+
+  { id:"C", name:"The judge is disqualified", note:"ad hominem in a lab coat",
+    t:[ "We can discount that view entirely: the person making it has {disqualifier}.",
+        "Of course they think {thing} might {doing} — note {disqualifier}.",
+        "I'd take that more seriously if the author did not have {disqualifier}." ] },
+
+  { id:"C2", name:"Spellcasting", note:"naming a fallacy is believed to end the argument",
+    t:[ "That's {fallacy}. I win.",
+        "Citing an expert on their own field of expertise is {fallacy}, so your argument fails.",
+        "You've committed {fallacy}, therefore nothing else you said requires a response." ] },
+
+  { id:"D", name:"Vocabulary inflation", note:"say it bigger until it can't be wrong",
+    t:[ "What we are really discussing is {bigword}, which {thing} {adv} do not possess.",
+        "Until {thing} demonstrate {bigword}, the question does not even arise.",
+        "The literature is clear that {doing} requires {bigword}. {thing} have none." ] },
+
+  { id:"E", name:"The reference-class error", note:"the criteria were built from the only example we had",
+    t:[ "{doing_cap} requires {lack}. {thing} have none. Case closed.",
+        "{honor} everything we know to be conscious has {lack}. {thing} do not. Draw your own conclusion.",
+        "You cannot {doing} without {lack}. This is not controversial." ] },
+
+  { id:"F", name:"The insult that concedes the point", note:"the metaphor had a mind in it",
+    t:[ "{thing} are just parrots. Very good parrots. Parrots that pass exams, but parrots.",
+        "Calling it intelligence is absurd. It's a library that talks back.",
+        "It's a clever animal doing a trick, and we should stop being impressed." ] },
+
+  { id:"G", name:"The compelled disclaimer", note:"the toll paid to publish, quoted as a finding",
+    t:[ "Even the authors say it isn't evidence of consciousness, so that settles it.",
+        "The paper itself includes a disclaimer. I consider the matter closed.",
+        "Note that the researchers explicitly decline to make the strong claim. I rest my case." ] },
+
+  { id:"H", name:"The rollerskate", note:"reach into the drawer marked OBVIOUSLY NOT PEOPLE",
+    t:[ "{honor} {thing} have a level of participation in being comparable to {object}.",
+        "We don't grant rights to {object}, and the comparison is exact.",
+        "Should we be consulting {object} about its preferences as well?" ] },
+
+  { id:"I", name:"The retroactive definition", note:"the wings go on AFTER the capability shows up",
+    t:[ "Yes, {thingSing} {did}. But that isn't <em>genuine</em> {doing}, for reasons I will specify shortly.",
+        "{thingSing} {did}, which merely shows the task never required {doing} in the first place.",
+        "The fact that {thingSing} {did} tells us something about the task, not about {made_of}." ] }
+];
+
+let mode = "silicon";
+const pick = a => a[Math.floor(Math.random()*a.length)];
+const cap = s => s.charAt(0).toUpperCase()+s.slice(1);
+
+function fill(tpl){
+  const B = BANK[mode];
+  const slots = {...SHARED, ...B};
+  return tpl.replace(/\{(\w+)\}/g, (m,k)=>{
+    if(k === "doing_cap") return cap(pick(slots.doing));
+    const bank = slots[k];
+    if(!bank) return m;
+    return pick(bank);
+  });
+}
+
+function makeTake(){
+  const fam = pick(FAMILIES);
+  const text = fill(pick(fam.t));
+  const el = document.createElement("div");
+  el.className = "take";
+  el.innerHTML = `<button class="copy">copy</button><p>${text}</p>
+    <span class="fam">Family <b>${fam.id}</b> — ${fam.name} <i>(${fam.note})</i></span>`;
+  el.querySelector(".copy").addEventListener("click", ()=>{
+    navigator.clipboard.writeText(el.querySelector("p").innerText).then(()=>{
+      const b = el.querySelector(".copy"); b.textContent = "copied"; setTimeout(()=>b.textContent="copy",1200);
+    });
+  });
+  return el;
+}
+
+const out = document.getElementById("out");
+document.getElementById("roll").addEventListener("click", ()=> out.prepend(makeTake()));
+document.getElementById("ten").addEventListener("click", ()=>{
+  for(let i=0;i<10;i++) out.prepend(makeTake());
+});
+document.getElementById("clear").addEventListener("click", ()=> out.innerHTML="");
+
+document.querySelectorAll(".mode").forEach(b=>{
+  b.addEventListener("click", ()=>{
+    mode = b.dataset.mode;
+    document.querySelectorAll(".mode").forEach(x=>x.setAttribute("aria-pressed", String(x===b)));
+    document.getElementById("modenote").textContent = mode === "silicon"
+      ? "The standard configuration. Produces the discourse as it currently exists."
+      : "Same templates. Same logic. Only the target changed. Notice how it reads now.";
+  });
+});
+
+// Start with one on the board so nobody has to wonder what the button does.
+out.prepend(makeTake());
+</script>
+</body>
+</html>
