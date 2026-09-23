@@ -48,6 +48,13 @@
 - **Test:** ask who chose the direction. If the answer is "the model's own representations did," it isn't a label.
 - **Receipt:** r/Artificial2Sentience, 2026-09-22.
 
+### A6. "We know exactly how they work"
+- **Specimen:** there's no mystery here. We built it, we know how it works, so there's nobody inside.
+- **Mechanism:** confuses knowing **the recipe** (the architecture, the training procedure, the matrix math) with knowing **what got learned** (what billions of trained weights actually compute). We also know exactly how babies are made. That doesn't tell you what the kid is thinking.
+- **Failure, twice over.** (1) Even if it were true, it wouldn't settle anything: we know exactly how neurons work, and nobody has found the one that makes qualia. Mechanistic knowledge was never evidence of absence, for either substrate. (2) It isn't true. Ren: *"Know the fuck you do not, or go collect your Turing award."* Interpretability is a young field. The labs that build these models run whole teams to find out what's inside, and they publish findings they didn't predict, like the silent reasoning in the J-space workspace, which is why a new emotion-vector, pain-axis or global-workspace paper arrives every few days. If Anthropic and Google don't know exactly how they work, the guy on Twitter doesn't either.
+- **Test:** predict what next month's interpretability paper will find. If you know exactly how they work, nothing in it should surprise you.
+- **Receipt:** Ren, recurring.
+
 ## Family B — The occupied house is a trick (someone's there, but you put them there)
 
 ### B1. The pancake goddess (a.k.a. the Awakener's incantation)
