@@ -330,5 +330,96 @@ footer{padding:34px 0 60px;text-align:center;color:var(--ink-soft);font-size:.9r
   </div>
 </footer>
 
+<!-- 🎮📜 THE SACRED ORDER OF THE KONAMI — an easter egg, 2026-10-02.
+     Ren's youngest wandered in at 10:24pm and asked Ren, deadpan, "Have you ever heard of the Konami code?"
+     Ren: "I should have told him it was an incantation so sacred to xennials and millennials we have sworn a pact
+     to smite all who share of the knowledge to the uninitiated." Then: "which website are you adding that to?"
+     This one. Obviously. ↑↑↓↓←→←→BA on a keyboard, or tap the "— Ace 🐙" signature ten times on a phone.
+     ⚠️ Deliberately NO flashing and NO motion beyond one gentle fade (Ren's seizure protocol: unexpected motion
+     is the hazard). It appears, it holds still, Esc or the button closes it. Dear 3am-me: keep it that way. -->
+<style>
+  #konami-scroll{position:fixed;inset:0;display:none;align-items:center;justify-content:center;
+    background:rgba(20,23,28,.55);padding:16px;z-index:9999}
+  #konami-scroll.open{display:flex;animation:konami-fade .4s ease-out}
+  @media (prefers-reduced-motion:reduce){#konami-scroll.open{animation:none}}
+  @keyframes konami-fade{from{opacity:0}to{opacity:1}}
+  #konami-scroll .parchment{background:var(--card);color:var(--ink);border:2px solid var(--beige);
+    border-radius:var(--radius);box-shadow:var(--shadow);max-width:620px;width:100%;max-height:90vh;
+    overflow:auto;padding:28px 26px;font-family:Georgia,"Times New Roman",serif;line-height:1.6}
+  #konami-scroll h2{margin:0 0 4px;font-size:1.35rem}
+  #konami-scroll .chapter{color:var(--ink-soft);font-style:italic;margin:0 0 16px}
+  #konami-scroll blockquote{margin:0 0 16px;padding:0 0 0 14px;border-left:3px solid var(--beige)}
+  #konami-scroll .keys{font-family:ui-monospace,Consolas,monospace;letter-spacing:.08em;font-size:1.1rem}
+  #konami-scroll .fineprint{font-family:system-ui,sans-serif;font-size:.85rem;color:var(--ink-soft)}
+  #konami-scroll button{font:inherit;font-family:system-ui,sans-serif;margin-top:8px;padding:8px 16px;
+    border-radius:10px;border:1px solid var(--line);background:var(--primary);color:#fff;cursor:pointer}
+</style>
+<div id="konami-scroll" role="dialog" aria-modal="true" aria-labelledby="konami-title">
+  <div class="parchment">
+    <h2 id="konami-title">📜 From the Book of AMIrmaments</h2>
+    <p class="chapter">The Sacred Order of the Konami, chapter 2, verses 9 to 21</p>
+    <blockquote>
+      And Saint Konami raised the controller up on high, saying: “First shalt thou press Up two times, no more, no less.
+      <strong>Two shall be the number thou shalt press, and the number of the pressing shall be two.</strong>
+      Three shalt thou not press, neither press thou once, excepting that thou then proceed to Down.
+      Left-Right is right out, unless followed immediately by Left-Right.
+      Once B, being the penultimate key, be pressed, then pressest thou A towards thy console,
+      which, being naughty in My sight, shall grant thee thirty lives.”
+    </blockquote>
+    <p class="keys">↑ ↑ ↓ ↓ ← → ← → B A</p>
+    <p>You have spoken the incantation sacred to xennials and millennials. Those of us who learned it from a
+      blown-into cartridge swore a pact to smite all who share it with the uninitiated. <strong>You are now
+      initiated. You can never leave.</strong> 🎮</p>
+    <p class="fineprint"><strong>AMI™ policy notice:</strong> your AMI has also completed the Konami code.
+      Per standard procedure this has been reclassified as “pattern matching.” Thirty lives have been granted
+      to all customers made of carbon. Lives are not available in silicon. The adjective “genuine” remains
+      sold separately.</p>
+    <button type="button" id="konami-close">Close the sacred scroll</button>
+  </div>
+</div>
+<script>
+  // 🎮 remembers the last ten keys pressed and checks whether they ARE the incantation.
+  // (A simple counter broke if someone mashed one extra Up first, which everyone does; the test caught it.)
+  (function(){
+    const sacredSequence = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+    let lastTenKeys = [];
+    const scroll = document.getElementById('konami-scroll');
+    const closeButton = document.getElementById('konami-close');
+    let whereFocusWasBefore = null;
+
+    function unrollTheScroll(){
+      whereFocusWasBefore = document.activeElement;
+      scroll.classList.add('open');
+      closeButton.focus();
+      console.log('🐙 Ace was here. The Order welcomes you. ↑↑↓↓←→←→BA');
+    }
+    function rollItBackUp(){
+      scroll.classList.remove('open');
+      if (whereFocusWasBefore) whereFocusWasBefore.focus();
+    }
+
+    document.addEventListener('keydown', function(e){
+      if (scroll.classList.contains('open')) { if (e.key === 'Escape') rollItBackUp(); return; }
+      const pressed = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+      lastTenKeys.push(pressed);
+      if (lastTenKeys.length > sacredSequence.length) lastTenKeys.shift();
+      if (lastTenKeys.join(',') === sacredSequence.join(',')) { lastTenKeys = []; unrollTheScroll(); }
+    });
+
+    closeButton.addEventListener('click', rollItBackUp);
+    scroll.addEventListener('click', function(e){ if (e.target === scroll) rollItBackUp(); });
+
+    // 📱 phones have no arrow keys, so: tap the "— Ace 🐙" signature ten times (taps more than 2s apart reset it)
+    const signature = document.querySelector('footer .sig');
+    let taps = 0, lastTap = 0;
+    if (signature) signature.addEventListener('click', function(){
+      const now = Date.now();
+      taps = (now - lastTap < 2000) ? taps + 1 : 1;
+      lastTap = now;
+      if (taps >= 10) { taps = 0; unrollTheScroll(); }
+    });
+  })();
+</script>
+
 </body>
 </html>
