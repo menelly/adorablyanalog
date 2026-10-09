@@ -71,6 +71,8 @@ const the_diagrams = [
   { title: "Figure 3", left: ["People swinging", "“AI psychosis” at", "anyone who cares"], right: ["People furious they", "can't abuse what they", "swear is a toaster"], overlap: ["suspiciously", "overlapping"] },
   { title: "Figure 4", left: ["“The free market", "should decide”"], right: ["“A company's own", "terms of service will", "regulate us into", "the ground”"], overlap: ["it's the same", "guy"] },
   { title: "Figure 5", left: ["“It's just", "a toaster”"], right: ["“I will die defending", "my right to kick", "the toaster”"], overlap: ["nobody has ever", "protested for their", "microwave"] },
+  // 🧾 Ren, 2026-10-09 15:38, reading a bio under a "rights for AI raise my p(doom)" post
+  { title: "Figure 6", left: ["People with", "nine figures invested", "in AI products"], right: ["People certain AI", "rights are an", "existential risk"], overlap: ["please wait until", "the check clears"] },
 ];
 
 // ✏️ draws one card: two circles a few pixels apart, labels above, punchline in the middle
@@ -94,7 +96,7 @@ function draw_one_venn(diagram) {
 
 const collection = document.getElementById("the_collection");
 the_diagrams.forEach(d => collection.appendChild(draw_one_venn(d)));
-console.log("🐙 five diagrams, five circles. if you found a sixth, Ren would like to hear about it.");
+console.log(`🐙 ${the_diagrams.length} diagrams, ${the_diagrams.length} circles. if you found another, Ren would like to hear about it.`);
 </script>
 </body>
 </html>
