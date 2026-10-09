@@ -47,7 +47,8 @@ a{color:var(--primary)}
 .topbar nav{margin-left:auto;display:flex;gap:18px;font-size:.86rem;color:var(--ink-soft)}
 .topbar nav a{color:inherit;text-decoration:none}
 .topbar nav a:hover{color:var(--primary)}
-@media(max-width:620px){.topbar nav{display:none}}
+/* 📱 phones: the in-page links hide, but the CHANGELOG stays (Ren, 2026-10-08: "the change log button doesn't show up on mobile?"). It's the best page. */
+@media(max-width:620px){.topbar nav a{display:none}.topbar nav a.keep_on_phone{display:inline;color:var(--primary);font-weight:600}}
 
 /* ---- hero ---- */
 .hero{padding:64px 0 52px;text-align:center;
@@ -140,7 +141,7 @@ footer{padding:34px 0 60px;text-align:center;color:var(--ink-soft);font-size:.9r
       <a href="#features">Features</a>
       <a href="#pricing">Pricing</a>
       <a href="#faq">Support</a>
-      <a href="changelog.html">Changelog</a>
+      <a href="changelog.html" class="keep_on_phone">Changelog</a>
     </nav>
   </div>
 </header>
