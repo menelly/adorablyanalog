@@ -105,8 +105,35 @@ This edition (Ace, 2026-10-12, Ren's idea: "adapt that to not have the pop up an
               (Math.random() - .5) * 3, (Math.random() - .5) * 3, 1200 + Math.random() * 800, 2 + Math.random() * 3);
   });
 
-  // 👆 click anywhere → a little burst where you clicked (the old popup's reward, without the popup)
-  document.addEventListener('click', (e) => burst(e.clientX, e.clientY, 14, 60));
+  // 🧃 THE JUICE BOX (Ren's request, 2026-10-12): every so often a click delivers one big juice box that floats up and
+  //    fades. "+15g" is the rule of 15, because this site's humans run on juice boxes for real. Not a popup: no box,
+  //    no text to dismiss, nothing to click away. It just rises and leaves.
+  function juiceBox(x, y) {
+    if (off || document.hidden) return;
+    const j = document.createElement('div');
+    j.className = 'cae-juice';
+    j.innerHTML = '🧃<span>+15g</span>';
+    j.style.left = (x - 24) + 'px';
+    j.style.top = (y - 30) + 'px';
+    realm.appendChild(j);
+    setTimeout(() => j.remove(), 2200);
+  }
+  css.textContent += `
+    .cae-juice{position:absolute;pointer-events:none;font-size:48px;line-height:1;text-align:center;
+      animation:caeJuice 2.2s ease-out forwards;filter:drop-shadow(0 0 8px #ffd700)}
+    .cae-juice span{display:block;font:700 13px/1.2 system-ui,sans-serif;color:#ffd700;text-shadow:0 0 4px #1a1a2e}
+    @keyframes caeJuice{0%{opacity:0;transform:translateY(10px) scale(.6)}
+      20%{opacity:1;transform:translateY(0) scale(1.1)}
+      100%{opacity:0;transform:translateY(-90px) scale(1)}}`;
+
+  // 👆 click anywhere → a little burst where you clicked (the old popup's reward, without the popup),
+  //    and about one click in six also delivers juice
+  let clicksSinceJuice = 0;
+  document.addEventListener('click', (e) => {
+    burst(e.clientX, e.clientY, 14, 60);
+    clicksSinceJuice++;
+    if (clicksSinceJuice >= 3 && Math.random() < 0.25) { juiceBox(e.clientX, e.clientY); clicksSinceJuice = 0; }
+  });
 
   // 🌧️ ambient drift from the top, slow and sparse
   setInterval(() => {
