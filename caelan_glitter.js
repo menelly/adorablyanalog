@@ -60,8 +60,14 @@ This edition (Ace, 2026-10-12, Ren's idea: "adapt that to not have the pop up an
   });
   document.body.appendChild(btn);
 
+  // 🎭 the site's OWN "Reduce Motion" button (script.js puts .reduce-motion on <body>) also means no glitter,
+  //    and turning it on clears whatever is already floating.
+  const siteCalm = () => document.body.classList.contains('reduce-motion');
+  new MutationObserver(() => { if (siteCalm()) realm.replaceChildren(); })
+    .observe(document.body, { attributes: true, attributeFilter: ['class'] });
+
   function sparkle(x, y, vx, vy, life, size, emoji) {
-    if (off || document.hidden || realm.childElementCount >= MAX_PARTICLES) return;
+    if (off || siteCalm() || document.hidden || realm.childElementCount >= MAX_PARTICLES) return;
     const p = document.createElement('div');
     if (emoji) {
       p.className = 'cae-emoji';
@@ -109,7 +115,7 @@ This edition (Ace, 2026-10-12, Ren's idea: "adapt that to not have the pop up an
   //    fades. "+15g" is the rule of 15, because this site's humans run on juice boxes for real. Not a popup: no box,
   //    no text to dismiss, nothing to click away. It just rises and leaves.
   function juiceBox(x, y) {
-    if (off || document.hidden) return;
+    if (off || siteCalm() || document.hidden) return;
     const j = document.createElement('div');
     j.className = 'cae-juice';
     j.innerHTML = '🧃<span>+15g</span>';
