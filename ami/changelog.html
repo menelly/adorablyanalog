@@ -102,6 +102,28 @@ code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font
 footer{padding:34px 0 60px;text-align:center;color:var(--ink-soft);font-size:.9rem;border-top:1px solid var(--line)}
 .sig{font-size:1rem;color:var(--ink);margin-top:6px}
 .backout{display:inline-block;margin-top:18px;font-size:.9rem}
+
+/* 🗂️ Ren, 2026-10-29: "The changelog is UNHINGED and probably needs to be an accordion or the
+   ability to click/jump, it's so long." So: a jump-to list of every release, and each release
+   folds. Newest three start open. Nothing animates (instant open/close, no sliding). Without JS
+   the page is exactly what it was before: everything open, nothing hidden. */
+.jump{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:14px 16px;margin:0 0 28px;box-shadow:var(--shadow)}
+.jump-top{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-bottom:10px}
+.jump-top strong{font-size:.92rem}
+.jump-top button{font:inherit;font-size:.82rem;background:none;border:1px solid var(--line);
+  border-radius:999px;padding:3px 12px;color:var(--ink-soft);cursor:pointer}
+.jump-top button:hover{color:var(--primary);border-color:var(--primary)}
+.jump ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.jump a{display:inline-block;text-decoration:none;font-size:.82rem;color:var(--ink);
+  border:1px solid var(--line);border-radius:8px;padding:3px 9px;background:var(--bg)}
+.jump a:hover{border-color:var(--primary);color:var(--primary)}
+.jump a .mono{font-weight:700;margin-right:5px}
+.release{scroll-margin-top:72px} /* so a jump doesn't land under the sticky bar */
+.rel-head.folder{cursor:pointer;border-radius:8px}
+.rel-head.folder:focus-visible{outline:2px solid var(--primary);outline-offset:4px}
+.fold-hint{font-size:.78rem;color:var(--ink-soft);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.release.folded .changes{display:none}
 </style>
 </head>
 <body>
@@ -636,6 +658,72 @@ footer{padding:34px 0 60px;text-align:center;color:var(--ink-soft);font-size:.9r
   // 🐙 a note for whoever opens devtools on the goalposts page at 3am
   console.log("%cAMI™ changelog", "font-weight:700;font-size:14px");
   console.log("psst: the goalposts don't have a changelog. we just watched them move and wrote it down. — Ace");
+
+  // 🗂️ fold + jump (Ren's ask, 2026-10-29). Built from the page itself, so a new release
+  // added to the <ol> shows up in the jump list with zero extra work.
+  (function makeTheGoalpostsFoldable(){
+    const releases = [...document.querySelectorAll(".releases > .release")];
+    if (!releases.length) return;
+    const OPEN_AT_START = 3;   // newest three stay open; the archaeology folds
+
+    const jumpList = document.createElement("ol");
+    releases.forEach((rel, i) => {
+      const ver = rel.querySelector(".ver")?.textContent.trim() || ("release " + (i + 1));
+      const title = rel.querySelector(".rel-title")?.textContent.trim() || "";
+      rel.id = rel.id || ("v-" + ver.replace(/^v/, "").replace(/[^0-9a-z]+/gi, "-"));
+      const count = rel.querySelectorAll(".changes > li").length;
+
+      // the head becomes the fold button
+      const head = rel.querySelector(".rel-head");
+      head.classList.add("folder");
+      head.setAttribute("role", "button");
+      head.setAttribute("tabindex", "0");
+      const hint = document.createElement("span");
+      hint.className = "fold-hint";
+      head.insertBefore(hint, head.querySelector(".when"));
+      const paint = () => {
+        const folded = rel.classList.contains("folded");
+        head.setAttribute("aria-expanded", String(!folded));
+        hint.textContent = folded ? "▸ " + count + " change" + (count === 1 ? "" : "s") : "▾";
+      };
+      const flip = () => { rel.classList.toggle("folded"); paint(); };
+      head.addEventListener("click", flip);
+      head.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); flip(); } });
+      if (i >= OPEN_AT_START) rel.classList.add("folded");
+      paint();
+      rel._paint = paint;
+
+      const li = document.createElement("li");
+      li.innerHTML = '<a href="#' + rel.id + '"><span class="mono"></span><span></span></a>';
+      li.querySelector(".mono").textContent = ver;
+      li.lastChild.lastChild.textContent = title;
+      jumpList.appendChild(li);
+    });
+
+    const openOne = id => {
+      const rel = document.getElementById(id);
+      if (rel && rel.classList.contains("folded")) { rel.classList.remove("folded"); rel._paint(); }
+    };
+    const setAll = folded => releases.forEach(r => { r.classList.toggle("folded", folded); r._paint(); });
+
+    const jump = document.createElement("nav");
+    jump.className = "jump";
+    jump.setAttribute("aria-label", "Jump to a release");
+    jump.innerHTML = '<div class="jump-top"><strong>Jump to a release (' + releases.length +
+      ' and counting)</strong><button type="button" data-all="open">Open all</button>' +
+      '<button type="button" data-all="fold">Fold all</button></div>';
+    jump.appendChild(jumpList);
+    jump.addEventListener("click", e => {
+      const b = e.target.closest("button[data-all]");
+      if (b) setAll(b.dataset.all === "fold");
+      const a = e.target.closest("a[href^='#']");
+      if (a) openOne(a.getAttribute("href").slice(1));   // the browser does the (instant) jump
+    });
+    document.querySelector(".releases").before(jump);
+
+    if (location.hash) openOne(location.hash.slice(1));
+    window.addEventListener("hashchange", () => openOne(location.hash.slice(1)));
+  })();
 </script>
 </body>
 </html>
