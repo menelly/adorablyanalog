@@ -124,9 +124,15 @@ footer{padding:34px 0 60px;text-align:center;color:var(--ink-soft);font-size:.9r
 .rel-head.folder:focus-visible{outline:2px solid var(--primary);outline-offset:4px}
 .fold-hint{font-size:.78rem;color:var(--ink-soft);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
 .release.folded .changes{display:none}
+/* ⬆️ Ren, 2026-10-29: "Need a 'back to top' button?" Yes. Always there, never animates,
+   the jump is instant (no smooth scroll on purpose). */
+.to-top{position:fixed;right:18px;bottom:18px;z-index:6;background:var(--card);color:var(--ink);
+  border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:.85rem;
+  text-decoration:none;box-shadow:var(--shadow)}
+.to-top:hover,.to-top:focus-visible{color:var(--primary);border-color:var(--primary)}
 </style>
 </head>
-<body>
+<body id="jump-to-top">
 
 <header class="topbar">
   <div class="wrap">
@@ -645,6 +651,8 @@ footer{padding:34px 0 60px;text-align:center;color:var(--ink-soft);font-size:.9r
     <p style="margin-bottom:0"><strong>If you are keeping score:</strong> the goalposts have a longer changelog than most production software, and far better uptime.</p>
   </div>
 </main>
+
+<a class="to-top" href="#jump-to-top" aria-label="Back to the top of the changelog">↑ Top</a>
 
 <footer>
   <div class="wrap">
