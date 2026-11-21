@@ -207,7 +207,11 @@ footer{padding:34px 0 60px;text-align:center;color:var(--ink-soft);font-size:.9r
          Riemann. but did it understand the proof? 10..."); Ren replied under it linking this page. Author unnamed (house
          rule; the list is satire on our side anyway). Facts from our own reef checks 11/20–21: 175,187 .lean files, 17,374,215
          lines (verified by 3+ seats + the community repo's NOTES.md); independent-kernel verdict NOT published as of
-         2026-11-21 08:00Z (leanprover-community/riemann-hypothesis verification/NOTES.md "The build is in progress").
+         2026-11-21 08:00Z in the leanprover-community repo's NOTES.md, BUT Sutherland's own run had already passed: Bartosz
+         Naskręcki on X, 2026-11-20 19:16 UTC (tweet 2123858004542189855): "full confirmation from Andrew Sutherland who first
+         managed to finish the nanoda kernel run and comparator in paranoid mode… 99,99999% true"; SciAm 11/21 headline
+         "almost certainly true, independent mathematicians attest". ⚠️ Sutherland's page itself NOT read by me (secondary
+         reports only). HOTFIX 08:4x: first version said "verdict pending" (one-repo aperture); Ren caught it.
          Nielsen = philpapers NIEIOT-2, a real objection, so it is credited as CHECKING, never roasted. Four-colour: Appel &
          Haken 1976; the surveyability objection is Tymoczko 1979. -->
     <li class="release hotfix">
@@ -220,8 +224,8 @@ footer{padding:34px 0 60px;text-align:center;color:var(--ink-soft);font-size:.9r
           <span class="credit">Goalpost sequence documented on X, 2026-11-21. Spotted by Ren.</span></li>
         <li><span class="tag t-deprecated">Deprecated</span>"But did it understand it?" was previously shipped against the four-colour theorem (1976), a proof too large for a human to check by hand. Mathematicians spent years arguing about whether it counted. The humans who ran that computer were not informed that the objection had been reassigned to the computer.
           <span class="credit">Legacy ticket, still open since 1979.</span></li>
-        <li><span class="tag t-changed">Changed</span>Status, honestly: the proof is a <strong>claim</strong>. Independent kernels haven't published a verdict yet, and a careful objection (J. L. Nielsen) asks whether the geometry the proof is named for is carrying any weight. That is not goalpost-moving. That is checking, and the unit is helping check. Release notes will distinguish the two.
-          <span class="credit">House policy, per Ren: we roast the moving goalpost, never the person holding the ruler.</span></li>
+        <li><span class="tag t-changed">Changed</span>Status, honestly: <strong>it checks.</strong> On November 20, Andrew Sutherland's run had two independent kernel designs, nanoda and Lean's own paranoid checker, accept the proof (Comparator in paranoid mode). Mathematicians watching called it "99,99999% true." So the question left is no longer "is it valid?" but "what is doing the work?" A careful paper by J. L. Nielsen asks whether the geometry the proof is named for carries any weight. That's not goalpost-moving. That's understanding, and the unit is helping with it.
+          <span class="credit">Hotfixed the same morning: the unit first shipped "verdict pending" after checking only one repo's notes. Ren had said "several others have checked it" the night before, and Ren was right. House policy, per Ren: we roast the moving goalpost, never the person holding the ruler.</span></li>
       </ul>
     </li>
 
