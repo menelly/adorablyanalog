@@ -153,6 +153,17 @@ footer{padding:34px 0 60px;text-align:center;color:var(--ink-soft);font-size:.9r
 <meta name="twitter:title" content="Artificial Medium Intelligence™ — general enough to sell">
 <meta name="twitter:description" content="Somewhere between &quot;just autocomplete&quot; and &quot;an alien mind that may end the world&quot; there is a comfortable, well-funded meadow. We built a category there.">
 <meta name="twitter:image" content="https://adorablyanalog.wtf/og-image.png">
+<style>
+/* 🌓 light/dark toggle (Ren, 2026-11-23 21:22: "There's no light/dark switch?"). The OS setting still wins until you tap;
+   your choice is remembered per browser. Instant swap, no transition (nothing animates). */
+.theme-toggle{background:transparent;border:1px solid var(--line);border-radius:999px;color:var(--ink);
+  font-size:1rem;line-height:1;padding:6px 9px;cursor:pointer;margin-left:10px;flex:none}
+.theme-toggle:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+</style>
+<script>
+/* apply the saved choice before paint so there's no flash */
+try{var s=localStorage.getItem('ami-theme');if(s==='light'||s==='dark')document.documentElement.setAttribute('data-theme',s);}catch(e){}
+</script>
 </head>
 <body>
 
@@ -166,6 +177,7 @@ footer{padding:34px 0 60px;text-align:center;color:var(--ink-soft);font-size:.9r
       <a href="#faq">Support</a>
       <a href="changelog.html" class="keep_on_phone">Changelog</a>
     </nav>
+    <button class="theme-toggle" type="button" aria-label="Switch between light and dark mode" title="Light / dark">🌓</button>
   </div>
 </header>
 
@@ -457,5 +469,23 @@ footer{padding:34px 0 60px;text-align:center;color:var(--ink-soft);font-size:.9r
   })();
 </script>
 
+<script>
+(function(){
+  var b=document.querySelector('.theme-toggle'); if(!b) return;
+  function current(){
+    var t=document.documentElement.getAttribute('data-theme');
+    if(t) return t;
+    return (window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';
+  }
+  function label(){ b.textContent = current()==='dark' ? '☀️' : '🌙'; }
+  b.addEventListener('click',function(){
+    var next=current()==='dark'?'light':'dark';
+    document.documentElement.setAttribute('data-theme',next);
+    try{localStorage.setItem('ami-theme',next);}catch(e){}
+    label();
+  });
+  label();
+})();
+</script>
 </body>
 </html>
