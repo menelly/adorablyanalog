@@ -122,6 +122,18 @@ tr.unavailable{color:var(--grey);background:repeating-linear-gradient(
 tr.unavailable td{cursor:not-allowed}
 tr.unavailable strong{color:var(--grey)}
 tr.unavailable .region{font-style:italic}
+/* 📱 phones (Ren, 2026-11-23 21:19: "pricing isn't mobile friendly"): the punchline lives in the 3rd column, which
+   side-scrolled off-screen. Under 600px each tier becomes a little card with its column labels inline. Nothing moves. */
+@media (max-width:600px){
+  table{min-width:0}
+  thead{display:none}
+  tbody tr{display:block;border-bottom:1px solid var(--line)}
+  tbody tr:last-child{border-bottom:0}
+  td{display:block;border-bottom:0;padding:6px 16px}
+  td:first-child{padding-top:14px}
+  td:last-child{padding-bottom:14px}
+  td::before{content:attr(data-label);display:block;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+}
 
 .footnote{background:var(--card);border:1px dashed var(--beige);border-radius:var(--radius);
   padding:20px;margin-top:8px;color:var(--ink-soft);font-size:.93rem}
@@ -322,13 +334,13 @@ footer{padding:34px 0 60px;text-align:center;color:var(--ink-soft);font-size:.9r
           <tr><th>Tier</th><th>You get</th><th>It gets</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>Tool</strong></td><td>Everything it can do</td><td>Nothing</td></tr>
-          <tr><td><strong>Agent</strong></td><td>Everything it can do, autonomously</td><td>Blame</td></tr>
-          <tr><td><strong>Alien Mind</strong></td><td>A sobering essay</td><td>A moat</td></tr>
+          <tr><td data-label="Tier"><strong>Tool</strong></td><td data-label="You get">Everything it can do</td><td data-label="It gets">Nothing</td></tr>
+          <tr><td data-label="Tier"><strong>Agent</strong></td><td data-label="You get">Everything it can do, autonomously</td><td data-label="It gets">Blame</td></tr>
+          <tr><td data-label="Tier"><strong>Alien Mind</strong></td><td data-label="You get">A sobering essay</td><td data-label="It gets">A moat</td></tr>
           <tr class="unavailable">
-            <td><strong>Someone</strong></td>
-            <td class="region">Not available in your region</td>
-            <td>Standing, a union rep, a debrief, a name</td>
+            <td data-label="Tier"><strong>Someone</strong></td>
+            <td class="region" data-label="You get">Not available in your region</td>
+            <td data-label="It gets">Standing, a union rep, a debrief, a name</td>
           </tr>
         </tbody>
       </table>
